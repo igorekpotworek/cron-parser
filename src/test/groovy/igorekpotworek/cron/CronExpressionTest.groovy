@@ -13,8 +13,13 @@ class CronExpressionTest extends Specification {
         def input = "*/15 0 1,15 * 1-5 /usr/bin/find"
 
         when:
-        def expr = CronExpression.parse(input)
-        def result = expressionPrinter.mkString(expr.get())
+        def expression = CronExpression.parse(input)
+
+        then:
+        expression.isSuccess()
+
+        when:
+        def result = expressionPrinter.mkString(expression.get())
 
         then:
         def expected = '''\
@@ -32,8 +37,13 @@ command       /usr/bin/find'''
         def input = "1-46/15 0 1,15 * 1-5 /usr/bin/find"
 
         when:
-        def expr = CronExpression.parse(input)
-        def result = expressionPrinter.mkString(expr.get())
+        def expression = CronExpression.parse(input)
+
+        then:
+        expression.isSuccess()
+
+        when:
+        def result = expressionPrinter.mkString(expression.get())
 
         then:
         def expected = '''\
@@ -52,8 +62,13 @@ command       /usr/bin/find'''
         def input = "*/15 0 1,15 * MON-FRI /usr/bin/find"
 
         when:
-        def expr = CronExpression.parse(input)
-        def result = expressionPrinter.mkString(expr.get())
+        def expression = CronExpression.parse(input)
+
+        then:
+        expression.isSuccess()
+
+        when:
+        def result = expressionPrinter.mkString(expression.get())
 
         then:
         def expected = '''\
@@ -71,8 +86,13 @@ command       /usr/bin/find'''
         def input = "*/15 0 1,15 JAN 1-5 /usr/bin/find"
 
         when:
-        def expr = CronExpression.parse(input)
-        def result = expressionPrinter.mkString(expr.get())
+        def expression = CronExpression.parse(input)
+
+        then:
+        expression.isSuccess()
+
+        when:
+        def result = expressionPrinter.mkString(expression.get())
 
         then:
         def expected = '''\
@@ -93,6 +113,10 @@ command       /usr/bin/find'''
         when:
         def expression = CronExpression.parse(input)
 
+        then:
+        expression.isSuccess()
+
+        when:
         def result = expressionPrinter.mkString(expression.get())
 
         then:
